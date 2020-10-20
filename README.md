@@ -963,7 +963,7 @@ Now, there are two ways to apply a ```git revert```;
 
 First way is;
 
-1. git revert ba97727c7e79967493eb19e11432d804545bb3f6
+1. Apply: ```git revert ba97727c7e79967493eb19e11432d804545bb3f6```
 2. The upper command will automatically open the default text editor, in my system it's **vi**, and the default is **vi** or **vim** in linux. It just simply ask the user to update the **revert commit message**. Do as you wish, and if you are using **vi**/**vim** too, when you are done, just press escape and write "wq!", which stands for write&quit, as shown below;
 ![git-revert-commit-message](https://github.com/bzdgn/git-tutorial/blob/main/misc/05-git-revert.PNG?raw=true)
 
@@ -1093,8 +1093,141 @@ Well done!
 
 10 Rebase Basics
 ----------------
+When we work on drafts, it's quite messy. Before we release something, we need to clean our workbench. The same applies to working with git environment. You work on your branch, make a dozen of commits and then if you push it to the remote, it will be annoying! Just for a simple functionality, if you make multiple commits to fix typos, renames, it's hard for readibility in git log, and also it's hard for manageability. Besides, when you do so, if you make a mistake, you are going to revert all those messy commits! So here another question comes: "What is a commit", in my huble opinion, a unit of work as small as possible that cannot be separable, should be wrapped in one commit!
 
--placeholder-
+My rule of thumb again;
+
+"**A unit of work as small as possible that cannot be separable, should be wrapped in one commit!**"
+
+This can change from team to team, you can discuss, but at least that's how I do in git.
+
+So what's a rebase then? In this section, I'll not go into the depth of rebase, it's an advanced tool comes with git. But I want to introduce "squashing" which git rebase makes it available to us. When you want to unify multiple commits related to a unit of work, you use rebase to squash those commits into one. Git is a very smart tool, will collect those multiple commits, makes one new commit from the start of the rebase point. So simply: We will use git rebase to squash multiple commits into one.
+
+What's good in this? Let's say, you make a commit for a fix, then several commits for renaming typos, because you were clumpsy. So finally, for one unit of code, you have 2 commits let's say. Then later on, you push it to the master, and it's seen that your fix has errors, breaks the integration tests somehow (I have written integration tests because if you push something while unit tests are failing, dude, you are doing it all wrong!), so you need to revert it. But because you have not wrapped your commits into one commit, you have to revert 2. If you have 5 commits on one fix, you have to revert 5 commits. And then, it looks really bad on git log. That's why, always squash a unit of work to one commit!
+
+Again: "**A unit of work as small as possible that cannot be separable, should be wrapped in one commit!**"
+
+So let's go for an example, learn it by heart as we always do;
+
+Here is our setup;
+
+1. Create the directory "**repo6**", change to this directory and apply: ```git init```
+2. I believe now you can easily do this sequentially. Create a file named as "**contents.txt**" and add every line and commit it distinctively.
+```
+Go to the station Eindhoven
+Find the yellow machine to load your OV chipkaart
+    Put your kaart in the machine
+    Load money on the machine
+    Use your bank card to and enter your pin to finish
+```
+So there will be 5 commits again.
+
+As you can see, this time, our content is givin sequential orders to someone. But the last three lines are tabbed because they are **transactional**, needs to be done at one time. So I want to unify these three commits into one. Let's do so.
+
+If you apply ```git log --oneline``` it should be as below;
+
+```
+D:\repo6>git log --oneline
+855b968 (HEAD -> master) fifth commit
+d3be3fb fourth commit
+7403a76 third commit
+c0707fa second commit
+59f5769 first commit
+```
+
+So let's squash the last three commit (those are seen on the top of commit stack, the top three!), into one.
+
+Now we have to be careful, we are going to use a new command;
+
+```git rebase -i <commit #>```
+
+We need to squash the last 3, but the rebase commit will be the one before them, it's the one that we would like to left behind. So;
+
+Apply: ```git rebase -i c0707fa```
+
+This will take you to the rebase screen within the default system text editor. Take a look at to the top 3 commands, yes, they are commands this time. You should also read the whole thing for once to understand what we do there;
+
+![git-rebase-squash-1](https://github.com/bzdgn/git-tutorial/blob/main/misc/06-rebase-squash-01.PNG?raw=true)
+
+Let's focus on those 3 top lines;
+
+```
+pick 7403a76
+pick d3be3fb
+pick 855b968
+```
+
+We want to pick the third commit, and mix/merge the fourth and fifth commits. The hash of third commit is : **7403a76**, so to mix the others, we are going to use **squash** instead of **pick**, like below;
+
+```
+pick 7403a76
+squash d3be3fb
+squash 855b968
+```
+
+When you apply, it should be seen like below, and then save and quit it;
+
+![git-rebase-squash-2](https://github.com/bzdgn/git-tutorial/blob/main/misc/07-rebase-squash-02.PNG?raw=true)
+
+Then a second screen comes, this one is our commit message, well, it's self explanatory, so I'll just save and quit;
+
+![git-rebase-squash-commit](https://github.com/bzdgn/git-tutorial/blob/main/misc/08-rebase-squash-commit-03.PNG?raw=true)
+
+If everything goes well (should be, if not, try again), then the console will look like this;
+
+```
+D:\repo6>git log --oneline
+855b968 (HEAD -> master) fifth commit
+d3be3fb fourth commit
+7403a76 third commit
+c0707fa second commit
+59f5769 first commit                                                                                                                                                                                                                            D:\repo6>git rebase -i c0707fa
+[detached HEAD 044ec11] third commit
+ Date: Tue Oct 20 10:14:56 2020 +0200
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+Successfully rebased and updated refs/heads/master.
+```
+
+Let's git-log and see what has been committed;
+
+```
+D:\repo6>git log --oneline
+044ec11 (HEAD -> master) third commit
+c0707fa second commit
+59f5769 first commit    
+```
+
+Hey, it seems that our commits are lost!, But no, we have unified it in the third commit, you can check it with ```git show HEAD``` command, which shows the last commit;
+
+```
+D:\repo6>git show HEAD
+commit 044ec11045aa4acfd5acd362b523636334339138 (HEAD -> master)
+Author: bzdgn <divilioglu@gmail.com>
+Date:   Tue Oct 20 10:14:56 2020 +0200
+
+    third commit
+
+    fourth commit
+
+    fifth commit
+
+diff --git a/contents.txt b/contents.txt
+index a3672e6..d7e3835 100644
+--- a/contents.txt
++++ b/contents.txt
+@@ -1,2 +1,5 @@
+ Go to the station Eindhoven
+-Find the yellow machine to load your OV chipkaart
+\ No newline at end of file
++Find the yellow machine to load your OV chipkaart
++    Put your kaart in the machine
++    Load money on the machine
++    Use your bank card to and enter your pin to finish
+\ No newline at end of file
+```
+
+Congratulations, you've just squashed your last 3 commits which makes life easier!
+
 
 [Go back to TOC](#toc)
 
