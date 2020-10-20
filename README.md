@@ -952,7 +952,7 @@ Let's remove our last commit. So, let's see the last commit: ```git log -n 1```
 ```
 D:\repo4>git log -n 1
 commit ba97727c7e79967493eb19e11432d804545bb3f6 (HEAD -> master)
-Author: bzdgn <divilioglu@gmail.com>
+Author: bzdgn <levent.divilioglu@divilioglu.com>
 Date:   Tue Oct 20 09:15:49 2020 +0200
 
     second commit
@@ -1203,7 +1203,7 @@ Hey, it seems that our commits are lost!, But no, we have unified it in the thir
 ```
 D:\repo6>git show HEAD
 commit 044ec11045aa4acfd5acd362b523636334339138 (HEAD -> master)
-Author: bzdgn <divilioglu@gmail.com>
+Author: bzdgn <levent.divilioglu@divilioglu.com>
 Date:   Tue Oct 20 10:14:56 2020 +0200
 
     third commit
