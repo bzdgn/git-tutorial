@@ -911,6 +911,7 @@ So the merge conflict is solved. ```git merge``` has much more many options, but
 
 [Go back to TOC](#toc)
 
+
  9 Revert Basics
 ----------------
 It sometimes happens that you commit something and it doesn't work, either because that's dependent on configuration, or because you were just careless, or you just fix something while you break something else. The reason is not important, ```git revert``` is used for that, for reverting one or several commits. The most simple definition for ```git revert``` is, it's just an **undo** for git.
@@ -1088,8 +1089,8 @@ This is my second line
 
 Well done!
 
-
 [Go back to TOC](#toc)
+
 
 10 Rebase Basics
 ----------------
@@ -1228,12 +1229,28 @@ index a3672e6..d7e3835 100644
 
 Congratulations, you've just squashed your last 3 commits which makes life easier!
 
-
 [Go back to TOC](#toc)
+
 
 11 Cherry Picking
 -----------------
+Assuming you are working on a branch, and you are messy. But one of the commits need to be injected on master, from a working messy branch. This can be done with "**cherry pick**" functionality of git which, in my opinion, saves hours and lives very oftenly. Learn "**cherry picking**" it's your friend and guardian angel!
 
--placeholder-
+Here is our use case, we have a master branch, and a feature branch
+
+```
+Master Branch: A (HEAD)
+Feature Branch: B -> C -> D (HEAD)
+```
+
+A, B, C and D are the commits. What I want to do is, just only take the commit C and apply it, put it on the top of the stack of the master branch. So at the end, this is what I want on master branch;
+
+```
+Master Branch: A -> C(HEAD)
+```
+
+Let's learn it by making practice again;
+
+-- WORK-IN-PROGRESS-
 
 [Go back to TOC](#toc)
