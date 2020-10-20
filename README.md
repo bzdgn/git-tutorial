@@ -971,7 +971,8 @@ First way is;
 As you are done with revert message editing, it's done. Apply as simple ```git log --oneline``` to see the revert message;
 
 ```
-D:\repo4>git revert ba97727c7e79967493eb19e11432d804545bb3f6                                                            [master 103d8ab] Revert "second commit"
+D:\repo4>git revert ba97727c7e79967493eb19e11432d804545bb3f6
+[master 103d8ab] Revert "second commit"
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 D:\repo4>git log --oneline
