@@ -1024,7 +1024,12 @@ So, I want to revert the last 3 commits, which means, the last 3 lines will be r
 Just apply: ```git revert HEAD~3..HEAD```, after this command, for 3 times, you are going to edit revert message for each commit. Then you will get to the terminal automatically;
 
 ```
-D:\repo5>git revert HEAD~3..HEAD                                                                                        [master e8ee88b] Revert "fifth commit"                                                                                   1 file changed, 1 insertion(+), 2 deletions(-)                                                                         [master 07b06f9] Revert "fourth commit"                                                                                  1 file changed, 1 insertion(+), 2 deletions(-)                                                                         [master c0793bf] Revert "third commit"
+D:\repo5>git revert HEAD~3..HEAD
+[master e8ee88b] Revert "fifth commit"
+1 file changed, 1 insertion(+), 2 deletions(-)
+[master 07b06f9] Revert "fourth commit"
+1 file changed, 1 insertion(+), 2 deletions(-)
+[master c0793bf] Revert "third commit"
  1 file changed, 1 insertion(+), 2 deletions(-)
 ```
 
