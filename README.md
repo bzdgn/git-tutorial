@@ -913,8 +913,181 @@ So the merge conflict is solved. ```git merge``` has much more many options, but
 
  9 Revert Basics
 ----------------
+It sometimes happens that you commit something and it doesn't work, either because that's dependent on configuration, or because you were just careless, or you just fix something while you break something else. The reason is not important, ```git revert``` is used for that, for reverting one or several commits. The most simple definition for ```git revert``` is, it's just an **undo** for git.
 
--placeholder-
+I believe, understanding the use case of revert is very important, and as you know it, you will be more careful when you are applying your commits. Why? Because you will know and consider if something goes wrong, you have to revert it, and that's why, a simple commit must be tidy. We will see that, especially when we talk about rebase in the next section.
+
+Let's learn it by practice;
+
+1. Create a folder: **repo4** and change to the directory.
+2. Apply: ```git init```
+3. Create "**contents.txt**" with the contents below;
+```
+My first sentence.
+```
+4. Apply: ```git add contents.txt``` and ```git commit -m "first commit"```
+5. Edit "**contents.txt**" with the contents below;
+```
+My second sentence.
+```
+4. Apply: ```git add contents.txt``` and ```git commit -m "second commit"```
+
+When you apply ```git log --oneline```, you will see the following two commits;
+
+```
+D:\repo4>git log --oneline
+ba97727 (HEAD -> master) second commit
+7d7ba6b first commit
+```
+
+And the latest status of the file of "**contents.txt**" is as below;
+
+```
+My first sentence.
+My second sentence.
+```
+
+Let's remove our last commit. So, let's see the last commit: ```git log -n 1```
+```
+D:\repo4>git log -n 1
+commit ba97727c7e79967493eb19e11432d804545bb3f6 (HEAD -> master)
+Author: bzdgn <divilioglu@gmail.com>
+Date:   Tue Oct 20 09:15:49 2020 +0200
+
+    second commit
+```
+
+We have to remember this hash to make a revert: ```ba97727c7e79967493eb19e11432d804545bb3f6```
+
+Now, there are two ways to apply a ```git revert```;
+
+First way is;
+
+1. git revert ba97727c7e79967493eb19e11432d804545bb3f6
+2. The upper command will automatically open the default text editor, in my system it's **vi**, and the default is **vi** or **vim** in linux. It just simply ask the user to update the **revert commit message**. Do as you wish, and if you are using **vi**/**vim** too, when you are done, just press escape and write "wq!", which stands for write&quit, as shown below;
+![git-revert-commit-message](https://github.com/bzdgn/git-tutorial/blob/main/misc/05-git-revert.PNG?raw=true)
+
+As you are done with revert message editing, it's done. Apply as simple ```git log --oneline``` to see the revert message;
+
+```
+D:\repo4>git revert ba97727c7e79967493eb19e11432d804545bb3f6                                                            [master 103d8ab] Revert "second commit"
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+D:\repo4>git log --oneline
+103d8ab (HEAD -> master) Revert "second commit"
+ba97727 second commit
+7d7ba6b first commit
+```
+
+As you can see, the second commit is reverted, to be sure, you can check the "**contents.txt**" file to see that the second line is gone.
+
+The second way to revert is this, using reference with **HEAD**
+
+Instead of reverting via hash, if you apply this command;
+
+```git revert HEAD~1..HEAD```
+
+and edit the revert-message through the default text editor, it will revert the last commit as well. The generic version of this command should be like;
+
+```git revert HEAD~<number_of_commits>..HEAD```
+
+If you run ```git revert HEAD~5..HEAD```, it means "revert the last 5 commits".
+
+Let's make an example for this;
+
+1. Create a directory "**repo5**", change to this directory and apply: ```git init```
+2. I believe now you can easily do this sequentially. Create a file named as "**contents.txt**" and add every line and commit it distinctively.
+```
+This is my first line
+This is my second line
+This is my third line
+This is my fourth line
+This is my fifth line
+```
+So there will be 5 commits.
+
+When you are done, it should look like this when you apply ```git log --oneline```;
+
+```
+D:\repo5>git log --oneline
+ea7166b (HEAD -> master) fifth commit
+e370bf7 fourth commit
+e39e38e third commit
+1d64d23 second commit
+ebb38da first commit
+```
+
+So, I want to revert the last 3 commits, which means, the last 3 lines will be removed. There are again, two ways to do that. You will see why it is so and you will regret the first way we are going to take.
+
+Just apply: ```git revert HEAD~3..HEAD```, after this command, for 3 times, you are going to edit revert message for each commit. Then you will get to the terminal automatically;
+
+```
+D:\repo5>git revert HEAD~3..HEAD                                                                                        [master e8ee88b] Revert "fifth commit"                                                                                   1 file changed, 1 insertion(+), 2 deletions(-)                                                                         [master 07b06f9] Revert "fourth commit"                                                                                  1 file changed, 1 insertion(+), 2 deletions(-)                                                                         [master c0793bf] Revert "third commit"
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+```
+
+Apply the ```git log``` and see, there are 3 distinct revert commits;
+
+```
+D:\repo5>git log --oneline
+c0793bf (HEAD -> master) Revert "third commit"
+07b06f9 Revert "fourth commit"
+e8ee88b Revert "fifth commit"
+ea7166b fifth commit
+e370bf7 fourth commit
+e39e38e third commit
+1d64d23 second commit
+ebb38da first commit
+```
+
+Check the file "**contents.txt**" so see the last 3 lines related to the last 3 commits are deleted;
+
+```
+This is my first line
+This is my second line
+```
+
+So it's very annoying to commit for every revert right? There's a better way, let's see that. Again, we have to set our repo up;
+
+1. Delete and create the directory "**repo5**", change to this directory and apply: ```git init```
+2. I believe now you can easily do this sequentially. Create a file named as "**contents.txt**" and add every line and commit it distinctively.
+```
+This is my first line
+This is my second line
+This is my third line
+This is my fourth line
+This is my fifth line
+```
+So there will be 5 commits.
+
+To revert the last 3 commits;
+
+1. Apply: ```git revert HEAD~3..HEAD --no-commit```
+2. Apply: ```git commit -m "reverting last 3 commits"```
+
+Now you can check ```git log```;
+
+```
+D:\repo5>git log --oneline
+cbc87d4 (HEAD -> master) reverting last 3 commits
+ea7166b fifth commit
+e370bf7 fourth commit
+e39e38e third commit
+1d64d23 second commit
+ebb38da first commit
+```
+
+You see, so in our command ```git revert HEAD~3..HEAD --no-commit```, the ```--no-commit``` option just reverts the commits, and then we manually enter a commit message regarding to our reverts. Simpler and better!
+
+Just to ensure, check your file and see the last three lines regarding to the three commits are removed;
+
+```
+This is my first line
+This is my second line
+```
+
+Well done!
+
 
 [Go back to TOC](#toc)
 
