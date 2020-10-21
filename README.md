@@ -710,7 +710,7 @@ Now it's time to make a practice.
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
     <fill here with something>
 Then she married with him have have 3 children.
 ```
@@ -726,7 +726,7 @@ For **branch_a**, here is what you need to do;
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
 And she met with a very ugly, smelly giant wolf!!!1
 Then she married with him have have 3 children.
 ```
@@ -741,7 +741,7 @@ For **branch_b**, here is what you need to do;
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
 And she met with a very handsome prince.
 Then she married with him have have 3 children.
 ```
@@ -753,7 +753,7 @@ So, here how **contents.txt** file is seen on master/main branch. You can checko
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
     <fill here with something>
 Then she married with him have have 3 children.
 ```
@@ -763,7 +763,7 @@ Here how the same file looks on **branch_a master**. You can checkout on master 
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
 And she met with a very ugly, smelly giant wolf!!!1
 Then she married with him have have 3 children.
 ```
@@ -773,7 +773,7 @@ And lastly, here how the same file looks on **branch_b** master. You can checkou
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
 And she met with a very handsome prince.
 Then she married with him have have 3 children.
 ```
@@ -801,7 +801,7 @@ And the content of the **contents.txt** file is changed to the following;
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
 And she met with a very ugly, smelly giant wolf!!!1
 Then she married with him have have 3 children.
 ```
@@ -840,7 +840,7 @@ Let's check the file **contents.txt**;
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
 <<<<<<< HEAD
 And she met with a very ugly, smelly giant wolf!!!1
 =======
@@ -868,7 +868,7 @@ Let's take the part coming from the **branch_b**, I've edited the **contents.txt
 ```
 Once upon a time, there was a very beautiful girl.
 She liked to go to the forest with her dog every day.
-One day, she is lost in the road.
+One day, she was lost in the road.
 And she met with a very handsome prince.
 Then she married with him have have 3 children.
 ```
