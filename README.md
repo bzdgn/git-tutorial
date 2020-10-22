@@ -1,6 +1,6 @@
 Levent's Git Tutorial With Command Line
 =======================================
-This is a tutorial over git using the command line. My goal is to make this tutorial as deep as it gets within time, so this tutorial will evolve gradually within time. However, first things first, because that I believe that an ordinary developer should learn basic git concepts and what it does, when to use what, I'll focus on that at first. Later then, I want to extend this tutorial about advanced features of git.
+This is a tutorial on git using the command line. My goal is to make this tutorial as deep as it gets within time, so this tutorial will evolve gradually within time. However, first things first, because that I believe that an ordinary developer should learn basic git concepts and what it does, when to use what, I'll focus on that at first. Later then, I want to extend this tutorial about advanced features of git.
 
 TOC
 ---
